@@ -137,7 +137,7 @@ func _process(_delta):
 	# aplicar movimento
 	# atualizar pontuação e similares.
 
-	# atualizar tela
+	# atualizar tela asdasdasdas
 
 	#testing the apple randomness
 	current_time += _delta
