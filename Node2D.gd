@@ -50,11 +50,50 @@ func restart_game() -> void:
 			grid[x].append(null)
 	
 	# 
-	# players player on the center.
+	# creates player on the center.
 	grid[ (grid.size()/2)   ][ (grid[grid.size()/2].size()/2) ] = "snakefacerigth"
 	grid[grid.size()/2 -1][grid[grid.size()/2].size()/2] = "snakebodyhorizontal"
 	grid[grid.size()/2 -2][grid[grid.size()/2].size()/2] = "snakeendright"
-			
+
+
+func add_apple() -> bool:
+
+	var gridCopy = grid.duplicate()
+
+	while (true):
+		var x = randi() % gridCopy.size() -1
+		var y = randi() % gridCopy[x].size() -1
+		
+		var formatedString = "TENTANDO COLOCAR MAÇA EM (%s , %s )" % [x,y]
+		print(formatedString)
+		if gridCopy.size()-1 < 1:
+			gridCopy = null
+			return false
+			break # if the gridcopy is empty / there is no space for an apple.
+
+
+		if (gridCopy[x][y] != null):
+				push_error("FRACASOU.")
+				# if the current space is already filled.
+				gridCopy[x].pop_at(y)
+				# if the entire row is filled.
+				if (gridCopy[x].count() < 1):
+					gridCopy.pop_at(x)
+					#if end;
+		else:
+			print("SUCESSO.")
+			# if the current space is empty place our apple!
+			grid[x][y] = "apple"
+			gridCopy = null # removes array copy from memory
+			# atleast i hope so... godot is funny.
+			return true
+			break # we have our apple!
+	
+	# if the loop ever breaks... by some god like interference.
+	push_error("ALGO DEU ERRADO. O LOOP ADD_APPLE QUEBROU.")
+	gridCopy = null
+	return false
+
 
 
 func redraw_arena() -> void:
@@ -83,11 +122,16 @@ func move_player(movement) -> bool:
 
 func _ready(): 
 	restart_game()
-	redraw_arena()
-
 	
+	add_apple()
+	
+	# this should ALWAYS be the last thing to process.
+	redraw_arena()
 	pass 
 
+
+var current_time = 0
+var delay_duration = 1
 func _process(_delta):
 	# pegar e validar movimento
 	# aplicar movimento
@@ -95,6 +139,20 @@ func _process(_delta):
 
 	# colocar um delay de 1s? menos?
 	# atualizar tela
+
+	#testing the apple randomness
+	current_time += _delta
+
+	if current_time > delay_duration:
+		restart_game()
+		add_apple()
+
+		redraw_arena()
+		
+		current_time = 0
+
+	
+
 	pass
 
 
