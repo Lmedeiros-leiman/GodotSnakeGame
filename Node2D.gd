@@ -131,13 +131,12 @@ func _ready():
 
 
 var current_time = 0
-var delay_duration = 1
+var delay_duration = 1 # segundo
 func _process(_delta):
 	# pegar e validar movimento
 	# aplicar movimento
 	# atualizar pontuação e similares.
 
-	# colocar um delay de 1s? menos?
 	# atualizar tela
 
 	#testing the apple randomness
