@@ -8,9 +8,10 @@ var TILEMAP = {
 	"empty": Vector2(3,3),
 	#maça
 	"apple":Vector2(0,0),
-	#corpo e cabeça
+	#corpo
 	"snakebodyvertical":Vector2(1,2),
 	"snakebodyhorizontal":Vector2(2,2),
+	#cabeça
 	"snakefaceup":Vector2(1,1),
 	"snakefacedown":Vector2(2,1),
 	"snakefaceleft":Vector2(0,2),
@@ -36,34 +37,64 @@ var TILEMAP = {
 # variaveis importantes
 var W_maxima = ProjectSettings.get("display/window/size/viewport_width") / 40 # 26
 var H_maxima = ProjectSettings.get("display/window/size/viewport_height") / 40 # 20
-var Table = Vector2i(W_maxima,H_maxima)
+var grid_size : Vector2i = Vector2i(W_maxima,H_maxima)
+var grid: Array
 
 
+func restart_game() -> void:
+	grid = []
 
-# Called when the node enters the scene tree for the first time.
-func _ready():
+	for x in range(grid_size.x):
+		grid.append([])
+		for y in range(grid_size.y):
+			grid[x].append(null)
 	
-	for i in Table:
-		print(i)
+	# 
+	# players player on the center.
+	grid[ (grid.size()/2)   ][ (grid[grid.size()/2].size()/2) ] = "snakefacerigth"
+	grid[grid.size()/2 -1][grid[grid.size()/2].size()/2] = "snakebodyhorizontal"
+	grid[grid.size()/2 -2][grid[grid.size()/2].size()/2] = "snakeendright"
+			
 
-	for i in range((TILEMAP.keys().size())):
-		
-		tileMap.set_cell(
-			0,
-			Vector2(i,0),
-			0,
-			Vector2(TILEMAP[ TILEMAP.keys()[i] ]),
-			0
+
+func redraw_arena() -> void:
+
+	#grid[x][y]
+
+
+	for i in (grid.size()):
+		for j in (grid[i].size()):
+
+			tileMap.set_cell(
+				0,
+				Vector2(i,j),
+				0,
+				TILEMAP[grid[i][j]]
+
+
+
 		)
 
-	print(TILEMAP.keys().size() )
-
-	pass # Replace with function body.
+func move_player(movement) -> bool:
 
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(_delta):
+	return true
+
+
+func _ready(): 
+	restart_game()
+	redraw_arena()
+
 	
+	pass 
+
+func _process(_delta):
+	# pegar e validar movimento
+	# aplicar movimento
+	# atualizar pontuação e similares.
+
+	# colocar um delay de 1s? menos?
+	# atualizar tela
 	pass
 
 
