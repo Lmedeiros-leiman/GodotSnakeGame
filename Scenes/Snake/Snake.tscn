@@ -1,0 +1,12 @@
+[gd_scene load_steps=3 format=3 uid="uid://cfn6uhphprvx6"]
+
+[ext_resource type="Script" path="res://Scenes/Snake/Snake.gd" id="1_jre0h"]
+[ext_resource type="Script" path="res://Scenes/Snake/PlayerInputComponent.gd" id="2_oh3py"]
+
+[node name="Snake" type="Node2D"]
+script = ExtResource("1_jre0h")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+
+[node name="PlayerInputComponent" type="Node" parent="."]
+script = ExtResource("2_oh3py")
